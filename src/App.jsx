@@ -22,6 +22,67 @@ const Icons = {
   Star: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>,
 };
 
+const ThemeSwitcher = ({ currentTheme, onThemeChange }) => {
+  const themes = [
+    { id: 'default', name: 'Original', color: '#1d1d1f' },
+    { id: 'blue', name: 'Ocean', color: '#0071e3' },
+    { id: 'red-gold', name: 'Royal', color: '#800000' },
+    { id: 'tree', name: 'Nature', color: '#4a3728' },
+  ];
+
+  return (
+    <div style={{ 
+      position: 'fixed', 
+      bottom: '30px', 
+      right: '30px', 
+      zIndex: 1000, 
+      display: 'flex', 
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '8px'
+    }}>
+      <div style={{ 
+        display: 'flex', 
+        gap: '12px',
+        background: 'var(--bg-primary)',
+        padding: '12px',
+        borderRadius: '100px',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+        border: '1px solid var(--border)',
+        transition: 'all 0.5s ease'
+      }}>
+        {themes.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => onThemeChange(t.id)}
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              backgroundColor: t.color,
+              border: currentTheme === t.id ? '2px solid var(--accent)' : '2px solid transparent',
+              cursor: 'pointer',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              transform: currentTheme === t.id ? 'scale(1.2)' : 'scale(1)',
+              boxShadow: currentTheme === t.id ? `0 0 15px ${t.color}44` : 'none',
+            }}
+            title={t.name}
+          />
+        ))}
+      </div>
+      <span style={{ 
+        fontSize: '11px', 
+        fontWeight: 600, 
+        textTransform: 'uppercase', 
+        letterSpacing: '0.1em',
+        color: 'var(--text-secondary)',
+        opacity: 0.8
+      }}>Byt Tema</span>
+    </div>
+  );
+};
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -83,7 +144,7 @@ const Hero = () => (
 );
 
 const Services = () => (
-  <section id="services" className="section-padding bg-secondary" style={{ backgroundColor: 'var(--bg-secondary)', padding: '140px 0' }}>
+  <section id="services" className="section-padding bg-secondary" style={{ backgroundColor: 'var(--bg-secondary)', padding: '140px 0', transition: 'background-color 0.5s ease' }}>
     <div className="container">
       <div style={{ textAlign: 'center', marginBottom: '80px' }}>
         <h2 style={{ fontSize: 'clamp(32px, 5vw, 48px)', marginBottom: '16px', fontWeight: 700 }}>Exklusiva Tjänster</h2>
@@ -98,11 +159,11 @@ const Services = () => (
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
             whileHover={{ y: -12 }} 
-            style={{ backgroundColor: 'var(--bg-primary)', borderRadius: '32px', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}
+            style={{ backgroundColor: 'var(--bg-primary)', borderRadius: '32px', overflow: 'hidden', border: '1px solid var(--border)', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', transition: 'all 0.5s ease' }}
           >
             <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '4/5' }}>
               <img src={s.image} alt={s.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease' }} />
-              <div style={{ position: 'absolute', top: '20px', right: '20px', backgroundColor: 'rgba(255,255,255,0.9)', padding: '6px 12px', borderRadius: '100px', fontSize: '14px', fontWeight: 600 }}>{s.price}</div>
+              <div style={{ position: 'absolute', top: '20px', right: '20px', backgroundColor: 'var(--bg-primary)', color: 'var(--text-primary)', padding: '6px 12px', borderRadius: '100px', fontSize: '14px', fontWeight: 600, border: '1px solid var(--border)' }}>{s.price}</div>
             </div>
             <div style={{ padding: '32px' }}>
               <h3 style={{ fontSize: '22px', fontWeight: 600, marginBottom: '8px' }}>{s.title}</h3>
@@ -116,7 +177,7 @@ const Services = () => (
 );
 
 const Experience = () => (
-  <section id="experience" style={{ padding: '140px 0' }}>
+  <section id="experience" style={{ padding: '140px 0', backgroundColor: 'var(--bg-primary)', transition: 'background-color 0.5s ease' }}>
     <div className="container">
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '80px', alignItems: 'center' }}>
         <motion.div 
@@ -127,14 +188,14 @@ const Experience = () => (
           <h2 style={{ fontSize: '48px', marginBottom: '32px', fontWeight: 700 }}>En upplevelse utöver det vanliga.</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
             <div style={{ display: 'flex', gap: '24px' }}>
-              <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'var(--accent-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Icons.Scissors /></div>
+              <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'var(--accent-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'background-color 0.5s ease' }}><Icons.Scissors /></div>
               <div>
                 <h4 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '8px' }}>Mästarkunskap</h4>
                 <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>Våra stylister har mångårig erfarenhet och utbildas kontinuerligt i de senaste teknikerna.</p>
               </div>
             </div>
             <div style={{ display: 'flex', gap: '24px' }}>
-              <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'var(--accent-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><Icons.Star /></div>
+              <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: 'var(--accent-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, transition: 'background-color 0.5s ease' }}><Icons.Star /></div>
               <div>
                 <h4 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '8px' }}>Premiumprodukter</h4>
                 <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>Vi arbetar uteslutande med marknadens mest exklusiva och skonsamma märken för ditt hårs hälsa.</p>
@@ -156,14 +217,14 @@ const Experience = () => (
 );
 
 const Booking = () => (
-  <section id="booking" style={{ padding: '140px 0', backgroundColor: 'var(--bg-secondary)' }}>
+  <section id="booking" style={{ padding: '140px 0', backgroundColor: 'var(--bg-secondary)', transition: 'background-color 0.5s ease' }}>
     <div className="container">
       <motion.div 
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         className="glass" 
-        style={{ padding: '100px 40px', borderRadius: '48px', maxWidth: '1000px', margin: '0 auto', textAlign: 'center', border: '1px solid rgba(255,255,255,0.1)' }}
+        style={{ padding: '100px 40px', borderRadius: '48px', maxWidth: '1000px', margin: '0 auto', textAlign: 'center', border: '1px solid var(--border)', transition: 'all 0.5s ease' }}
       >
         <h2 style={{ fontSize: 'clamp(40px, 6vw, 64px)', marginBottom: '24px', fontWeight: 700, letterSpacing: '-0.04em' }}>Redo för en förändring?</h2>
         <p style={{ fontSize: '22px', color: 'var(--text-secondary)', marginBottom: '48px', maxWidth: '600px', margin: '0 auto 48px' }}>Hitta en tid som passar dig. Vi ser fram emot att välkomna dig till vår oas i city.</p>
@@ -178,14 +239,21 @@ const Booking = () => (
 );
 
 function App() {
+  const [theme, setTheme] = useState('default');
+
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)', transition: 'background-color 0.5s ease' }}>
+      <ThemeSwitcher currentTheme={theme} onThemeChange={setTheme} />
       <Navbar />
       <Hero />
       <Services />
       <Experience />
       <Booking />
-      <footer style={{ padding: '80px 0', borderTop: '1px solid var(--border)', textAlign: 'center', backgroundColor: 'var(--bg-primary)' }}>
+      <footer style={{ padding: '80px 0', borderTop: '1px solid var(--border)', textAlign: 'center', backgroundColor: 'var(--bg-primary)', transition: 'all 0.5s ease' }}>
         <div className="container">
           <h3 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '24px' }}>{LUXE_STUDIO.name}</h3>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '40px' }}>

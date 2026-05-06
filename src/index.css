@@ -29,6 +29,36 @@
   }
 }
 
+[data-theme='blue'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f7ff;
+  --text-primary: #003366;
+  --text-secondary: #557799;
+  --accent: #0071e3;
+  --accent-soft: #e1effe;
+  --border: rgba(0, 51, 102, 0.1);
+}
+
+[data-theme='red-gold'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #fffaf0;
+  --text-primary: #800000;
+  --text-secondary: #a67c00;
+  --accent: #d4af37;
+  --accent-soft: #fcf4d9;
+  --border: rgba(128, 0, 0, 0.1);
+}
+
+[data-theme='tree'] {
+  --bg-primary: #fdfaf6;
+  --bg-secondary: #f4eee8;
+  --text-primary: #4a3728;
+  --text-secondary: #8b7355;
+  --accent: #5d4037;
+  --accent-soft: #efebe9;
+  --border: rgba(74, 55, 40, 0.1);
+}
+
 * {
   margin: 0;
   padding: 0;
